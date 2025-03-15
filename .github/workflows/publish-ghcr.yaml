@@ -66,12 +66,15 @@ jobs:
       packages: write
 
     steps:
+      - name: get repository name to derive package name # GITHUB_REPOISTORY returns "owner/name" and we only want "name" for the package
+        run: echo "PACKAGE_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+
       - name: Delete older container images
         uses: actions/delete-package-versions@v5
         with:
           owner: ${{ github.repository_owner }}
           delete-only-untagged-versions: 'false'
-          min-versions-to-keep: 3
-          package-name: jenkins-inbound-agent-py # ${{ env.IMAGE_NAME }} follows "owner/name" which results in not found
+          min-versions-to-keep: 6
+          package-name: ${{ env.PACKAGE_NAME }}
           package-type: container
           token: ${{ secrets.GHCR_TOKEN }}

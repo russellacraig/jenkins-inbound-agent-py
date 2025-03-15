@@ -7,6 +7,7 @@ https://hub.docker.com/r/jenkins/inbound-agent
 ## example docker-compose.yaml and .env files
 > [!IMPORTANT]
 > modify these files for your environment and preferences, see the source dockerhub image page for more details
+
 docker-compose.yaml:
 ```yaml
 services:
