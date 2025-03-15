@@ -56,3 +56,12 @@ jobs:
         subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
         subject-digest: ${{ steps.push.outputs.digest }}
         push-to-registry: true
+
+    # only keep the last amount of specified images
+    - name: Delete container versions
+      uses: actions/delete-package-versions@v5
+      with:
+        delete-only-untagged-versions: 'false'
+        min-versions-to-keep: 1
+        package-name: ${{ env.IMAGE_NAME }}
+        package-type: container
