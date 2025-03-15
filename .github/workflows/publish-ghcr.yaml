@@ -37,6 +37,8 @@ jobs:
       uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        flavor: |
+          latest=true
 
     # pin login to a full SHA (v6.15.0 from https://github.com/docker/build-push-action/releases)
     - name: Build and push Docker image
