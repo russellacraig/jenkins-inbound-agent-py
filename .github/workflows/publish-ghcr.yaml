@@ -57,11 +57,21 @@ jobs:
         subject-digest: ${{ steps.push.outputs.digest }}
         push-to-registry: true
 
-    # only keep the last amount of specified images
-    - name: Delete container versions
-      uses: actions/delete-package-versions@v5
-      with:
-        delete-only-untagged-versions: 'false'
-        min-versions-to-keep: 1
-        package-name: ${{ env.IMAGE_NAME }}
-        package-type: container
+  cleanup-older-images:
+    needs: build-and-push-image
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Delete older container images
+        uses: actions/delete-package-versions@v5
+        with:
+          owner: ${{ github.repository_owner }}
+          delete-only-untagged-versions: 'false'
+          min-versions-to-keep: 3
+          package-name: ${{ env.IMAGE_NAME }}
+          package-type: container
+          token: ${{ secrets.GHCR_TOKEN }}
