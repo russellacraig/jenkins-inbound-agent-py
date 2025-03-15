@@ -3,7 +3,7 @@ name: jenkins-inbound-agent-py build and publish
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 env:
   REGISTRY: ghcr.io
